@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: cinfly-bookshop
+  datasource:
+    url: jdbc:mysql://localhost:3306/cinfly_bookshop?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowLoadLocalInfile=true&allowLocalInfile=true&allowUrlInLocalInfile=true&allowPublicKeyRetrieval=true&allowMultiQueries=true&allowPublicKeyRetrieval=true&allowMultiQueries=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# JWT??
+jwt:
+  secret: cinfly-bookshop-jwt-secret-key-2026
+  expiration: 86400000  # 24??????
+  header: Authorization
+  prefix: "Bearer"
+# Knife4j??
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+knife4j:
+#  enable: true
+#  setting:
+#    language: zh_cn
+#mybatis??
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+#mysql??
