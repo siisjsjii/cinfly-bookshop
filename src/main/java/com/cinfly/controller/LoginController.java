@@ -26,8 +26,9 @@ public class LoginController {
         public Result<LoginUserVo> login(@RequestBody User user) {
             String username=user.getUsername();
             String password=user.getPassword();
+            Integer status=user.getStatus();
             log.info("用户名：{}，密码：{}", username, password);
-             LoginUserVo userVo=userService.login(username, password);
+             LoginUserVo userVo=userService.login(username, password,status);
             return Result.success(userVo);
         }
 

@@ -1,6 +1,7 @@
 package com.cinfly.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.cinfly.dto.PasswordDto;
 import com.cinfly.entity.User;
 import com.cinfly.exception.BusinessException;
 import com.cinfly.mapper.UserMapper;
@@ -27,7 +28,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     private JwtUtil jwtUtil;
     @Override
-    public LoginUserVo login(String username, String password) {
+    public LoginUserVo login(String username, String password,Integer status) {
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<User>().eq(User::getUsername, username);
         User user = this.getOne(wrapper);
         if(user==null)
@@ -39,8 +40,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         {
             throw new BusinessException("密码错误");
         }
+        //密码正确校验身份
+        if(user.getStatus()!=status)
+        {
+            throw new BusinessException("身份错误");
+        }
         //根据id username 生成token
         String token= jwtUtil.generateToken(user.getId(),username);
         return new LoginUserVo(user.getId(),username,token);
+    }
+
+    @Override
+    public void updatePassword(Integer id, PasswordDto passwordDto) {
+        User user = getById(id);
+        if(!passwordEncoder.matches(passwordDto.getOldPassword(),user.getPassword()))
+        {
+            throw new BusinessException("旧密码错误");
+        }
+        //密码正确进行修改
+        user.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
+        updateById(user);
+
     }
 }

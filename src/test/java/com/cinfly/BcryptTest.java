@@ -22,7 +22,8 @@ public class BcryptTest {
     {
         String password="123456";
         String encode = passwordEncoder.encode(password);
-        userMapper.updateById(new User(1, "cinfly", encode, LocalDateTime.now()));
+        //userMapper.updateById(new User(1, "cinfly", encode, LocalDateTime.now(),1));
+       // userMapper.insertOrUpdate(new User(2, "sky", encode, LocalDateTime.now(),1));
 
     }
 }

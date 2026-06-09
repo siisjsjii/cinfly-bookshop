@@ -59,6 +59,11 @@
             <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
             <version>3.5.9</version>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId>
+            <version>3.5.9</version> <!-- 这个版本号需要和你使用的 MyBatis-Plus 版本保持一致 -->
+        </dependency>
         <!-- MySQL驱动 -->
         <dependency>
             <groupId>com.mysql</groupId>
@@ -111,6 +116,20 @@
             <artifactId>junit-jupiter</artifactId>
             <version>5.10.0</version>
         </dependency>
+
+            <!-- 阿里云 OSS SDK -->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>3.18.4</version>
+            </dependency>
+
+            <!-- Java 9+ 需要 JAXB -->
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>2.3.1</version>
+            </dependency>
     </dependencies>
 
     <build>
