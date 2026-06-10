@@ -2,20 +2,16 @@ package com.cinfly.controller;
 
 import com.cinfly.constant.PageResult;
 import com.cinfly.constant.Result;
-import com.cinfly.dto.PageQueryDto;
+import com.cinfly.dto.bookPageQueryDto;
 import com.cinfly.entity.Books;
-import com.cinfly.mapper.BooksMapper;
 import com.cinfly.service.IBooksService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.result.StatusResultMatchersExtensionsKt;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.invoke.CallSite;
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 @RestController
@@ -42,10 +38,10 @@ public class BookController {
     }
     @GetMapping("/list")
     @Operation(summary = "获取所有书籍")
-    public Result<PageResult>pageQuery(PageQueryDto pageQueryDto)
+    public Result<PageResult>pageQuery(bookPageQueryDto bookPageQueryDto)
     {
         log.info("获取所有书籍");
-        PageResult pageResult=booksService.pageQuery( pageQueryDto);
+        PageResult pageResult=booksService.pageQuery(bookPageQueryDto);
         return Result.success(pageResult);
 
     }

@@ -1,7 +1,7 @@
 package com.cinfly.service;
 
 import com.cinfly.constant.PageResult;
-import com.cinfly.dto.PageQueryDto;
+import com.cinfly.dto.bookPageQueryDto;
 import com.cinfly.entity.Books;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -15,5 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IBooksService extends IService<Books> {
 
-    PageResult pageQuery(PageQueryDto pageQueryDto);
+    PageResult pageQuery(bookPageQueryDto bookPageQueryDto);
 }

@@ -3,15 +3,13 @@ package com.cinfly.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cinfly.constant.PageResult;
-import com.cinfly.dto.PageQueryDto;
+import com.cinfly.dto.bookPageQueryDto;
 import com.cinfly.entity.Books;
 import com.cinfly.mapper.BooksMapper;
 import com.cinfly.service.IBooksService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * <p>
@@ -26,12 +24,13 @@ public class BooksServiceImpl extends ServiceImpl<BooksMapper, Books> implements
     @Autowired
     private BooksMapper booksMapper;
     @Override
-    public PageResult pageQuery(PageQueryDto pageQueryDto) {
-      Page<Books>page=new Page<>(pageQueryDto.getPage(),pageQueryDto.getSize());
+    public PageResult pageQuery(bookPageQueryDto bookPageQueryDto) {
+      Page<Books>page=new Page<>(bookPageQueryDto.getPage(), bookPageQueryDto.getSize());
         LambdaQueryWrapper<Books> wrapper = new LambdaQueryWrapper<Books>()
-                .like(pageQueryDto.getName() != null,Books::getTitle, pageQueryDto.getName())
-                .eq(   pageQueryDto.getAuthor()!=null,Books::getAuthor, pageQueryDto.getAuthor())
-                .eq(pageQueryDto.getCategoryId()!=null,Books::getCategoryId, pageQueryDto.getCategoryId());
+                .like(bookPageQueryDto.getName() != null,Books::getTitle, bookPageQueryDto.getName())
+                .eq(   bookPageQueryDto.getAuthor()!=null,Books::getAuthor, bookPageQueryDto.getAuthor())
+                .eq(bookPageQueryDto.getCategoryId()!=null,Books::getCategoryId, bookPageQueryDto.getCategoryId())
+                .eq(bookPageQueryDto.getStatus()!=null,Books::getStatus, bookPageQueryDto.getStatus());
        Page<Books> pageResult=booksMapper.pageQuery(page,wrapper);
        return new PageResult(pageResult.getTotal(),pageResult.getRecords());
     }

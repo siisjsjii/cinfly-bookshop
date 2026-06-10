@@ -17,5 +17,5 @@ public interface IUserService extends IService<User> {
 
     LoginUserVo login(String username, String password,Integer status);
 
-    void updatePassword(Integer id, PasswordDto passwordDto);
+    void updatePassword(Long id, PasswordDto passwordDto);
 }

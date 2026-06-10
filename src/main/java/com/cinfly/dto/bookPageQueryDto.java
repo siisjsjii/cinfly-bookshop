@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PageQueryDto {
+public class bookPageQueryDto {
     private Integer page;
     private Integer size;
     private String name;
     private String author;
     private Integer categoryId;
+    private Integer status;
 }

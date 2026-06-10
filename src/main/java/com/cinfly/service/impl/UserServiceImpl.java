@@ -3,15 +3,22 @@ package com.cinfly.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.cinfly.dto.PasswordDto;
 import com.cinfly.entity.User;
+import com.cinfly.entity.Userinfo;
 import com.cinfly.exception.BusinessException;
 import com.cinfly.mapper.UserMapper;
+import com.cinfly.mapper.UserinfoMapper;
 import com.cinfly.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cinfly.service.IUserinfoService;
 import com.cinfly.utils.JwtUtil;
 import com.cinfly.utils.PasswordEncoder;
 import com.cinfly.vo.LoginUserVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -25,6 +32,9 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private IUserinfoService userinfoService;
+
     @Autowired
     private JwtUtil jwtUtil;
     @Override
@@ -51,15 +61,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public void updatePassword(Integer id, PasswordDto passwordDto) {
+    public void updatePassword(Long id, PasswordDto passwordDto) {
         User user = getById(id);
         if(!passwordEncoder.matches(passwordDto.getOldPassword(),user.getPassword()))
         {
             throw new BusinessException("旧密码错误");
         }
         //密码正确进行修改
-        user.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
+        String newPassword=passwordEncoder.encode(passwordDto.getNewPassword());
+        user.setPassword(newPassword);
         updateById(user);
+        //修改用户信息明细表
+        Userinfo userinfo = new Userinfo();
+        userinfo.setUserId(id);
+        userinfo.setUpdateTime(LocalDateTime.now());
+        userinfo.setPassword(newPassword);
+        userinfoService.updateById(userinfo);
 
     }
 }
